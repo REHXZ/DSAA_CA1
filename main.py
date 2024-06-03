@@ -1,5 +1,5 @@
 from Morse.morse_encoder import Encoder, Decoder
-from Frequency.Report import Frequencies
+from Frequency.Frequency import Frequencies
 from menu.Menu import Menu
 Current_state = True
 

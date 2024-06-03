@@ -18,11 +18,16 @@ class Morse:
 
     def select_Input_file(self):
         self.Input_File = input("\nPlease Enter input file: ")
+
     def select_Output_file(self):
         self.Output_File = input("Please Enter output file: ")
         
-    def morse_recursive(self,string = None):
+    def morse_recursive(self,string = None, text = None):
         while True:
+            if string != None and text != None:
+                self.file_contents = text
+                self.process()
+                return self.word
             self.select_Input_file()
             Utility.CheckFileType(self.Input_File)
             self.file_contents = Utility.OpenTextFile(self.Input_File)
@@ -32,7 +37,7 @@ class Morse:
                 if Utility.CheckFileType(self.Output_File,1):
                         Utility.WriteFile(self.Output_File, self.word)
             else:
-                return self.word
+                return [self.word,self.Input_File]
             break
 
 
