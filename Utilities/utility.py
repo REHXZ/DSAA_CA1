@@ -1,5 +1,5 @@
 class Utility:
-
+  """Checks the file that is given"""
   def CheckFileType(file,type=0):
     if file !=  '':
       if file.endswith('.txt'):
@@ -12,15 +12,17 @@ class Utility:
               return False
         else:
           return True
-      print("\nPlease enter a valid file")
+      else:
+        print("\nPlease enter a valid file")
+        return False
+    else:
       return False
-    return False
 
-
-    
+  """Returns a string version of the file parsed in"""
   def OpenTextFile(File):
     return open(File, 'r').read()
 
+  """creates a file with a parameter"""
   def WriteFile(File,Value):
       f = open(File,'w+')
       f.write(Value)

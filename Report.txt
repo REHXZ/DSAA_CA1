@@ -1,3 +1,8 @@
+*********************************************
+REPORT GENERATED ON: 04-06-2024 16:17
+*********************************************
+
+*** Decoded Morse Text
 HELP US SOS SOS SOS
 OUR SHIP HAS HIT AN ICEBERG
 PLEASE HELP US
@@ -5,3 +10,34 @@ THIS IS A SOS
 OUR SHIP IS SINKING
 WE HIT AN ICEBERG
 THIS IS AN SOS
+
+*** Morse Words with frequency => 5
+[...,---,...]=> SOS(*)
+
+*** Morse Words with frequency => 3
+[.-,-.]=> AN
+[..,...]=> IS
+
+*** Morse Words with frequency => 2
+[....,.,.-..,.--.]=> HELP(*)
+[....,..,-]=> HIT(*)
+[..,-.-.,.,-...,.,.-.,--.]=> ICEBERG(*)
+[---,..-,.-.]=> OUR
+[...,....,..,.--.]=> SHIP(*)
+[-,....,..,...]=> THIS
+[..-,...]=> US
+
+*** Morse Words with frequency => 1
+[.-]=> A
+[....,.-,...]=> HAS
+[.--.,.-..,.,.-,...,.]=> PLEASE
+[...,..,-.,-.-,..,-.,--.]=> SINKING(*)
+[.--,.]=> WE
+
+*** Keywords sorted by frequency
+SOS(5)
+HELP(2)
+HIT(2)
+ICEBERG(2)
+SHIP(2)
+SINKING(1)

@@ -1,5 +1,6 @@
 from Utilities.utility import Utility
 
+"""New class Morse"""
 class Morse:
     
     def __init__(self):
@@ -15,40 +16,45 @@ class Morse:
         }
         self.word = ''
         self.file_contents = None
-
+    """Function to initialize the Input File"""
     def select_Input_file(self):
         self.Input_File = input("\nPlease Enter input file: ")
-    
+
+    """Function to initialize the Output File"""
     def select_Output_file(self):
         self.Output_File = input("Please Enter output file: ")
 
+    """Function to convert a string from text to morse"""
     def morse_String(self,string):
         self.file_contents = string 
         self.process()
         return self.word
     
+    """Function to recursively call itself when the user enters a invalid file type"""
     def morse_recursive(self,string = None):
-        while True:
-            self.select_Input_file()
-            if Utility.CheckFileType(self.Input_File):
-                self.file_contents = Utility.OpenTextFile(self.Input_File)
-                self.process()
-            else:
-                self.morse_recursive()
-                continue
-            if string == None:
-                while True:
-                    self.select_Output_file()
-                    if not Utility.CheckFileType(self.Output_File,1):
-                        continue
-                    else:
-                        return Utility.WriteFile(self.Output_File, self.word)
-            else:
-                return self.word
+        self.select_Input_file()
+        if Utility.CheckFileType(self.Input_File):
+            self.file_contents = Utility.OpenTextFile(self.Input_File)
+            self.process()
+        else:
+            self.morse_recursive()
+        if string == None:
+            state = True
+            if state:
+                self.select_Output_file()
+                if Utility.CheckFileType(self.Output_File,1):
+                    Utility.WriteFile(self.Output_File, self.word)
+                    state = False
+        else:
+            return self.word
 
+"""Subclasses of Morse"""
 class Encoder(Morse):
-
+    """Encoder Functiontion to Encode Text into Morse"""
     def process(self):
+        if '-' in self.file_contents:
+            print('Invalid File Type')
+            return self.morse_recursive()
         self.file_contents = self.file_contents.split('\n')
         morse_lines = []
         for line in self.file_contents:
@@ -58,9 +64,13 @@ class Encoder(Morse):
 
 
 class Decoder(Morse):
-
+    """Decoder Functiontion to decode Morse to Text"""
     def process(self):
         self.file_contents = self.file_contents.replace('\n', ',, ,').split(',')
         for i in self.file_contents:
-            self.word += list(self.Morse_dict.keys())[list(self.Morse_dict.values()).index(i)]
+            try:
+                self.word += list(self.Morse_dict.keys())[list(self.Morse_dict.values()).index(i)]
+            except ValueError:
+                print("Invalid File Type")
+                return self.morse_recursive()
         self.word = self.word.replace(', ', '\n')
