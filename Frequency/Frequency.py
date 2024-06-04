@@ -1,44 +1,55 @@
 from Morse.morse_encoder import Encoder, Decoder, Morse
 from Utilities.utility import Utility
+from SortedList.SortedList import SortedList
+from SortedList.Word import Word
 
 class Frequencies(Morse):
     def __init__(self):
         super().__init__()
-        self.Input_File = ''
         self.Word = ''
         self.Stopwords = Utility.OpenTextFile('Stopwords.txt').split("\n")
 
     def read_frequencies(self):
-        Input = Decoder().morse_recursive('')
-        self.Input_File = Input[1]
-        self.Word = Input[0].replace("\n", " ").split(" ")
+        self.Output_File = None
+        Input = Decoder().morse_recursive("")
+        self.Word = Input.replace("\n", " ").split(" ")
         self.Remove_Stopwords()  # Ensure stop words are removed before counting frequencies
         frequencies = self.count_frequencies(self.Word)
-        self.display_frequency_graph(frequencies)
-        self.display_frequency_labels(frequencies)
-        print(frequencies)
+        sorted_dict = self.sort_frequencies(frequencies)  # Sort the frequencies
+        self.display_frequency_graph(sorted_dict)
+        self.display_frequency_labels(sorted_dict)
 
     def Remove_Stopwords(self):
         self.Word = [word for word in self.Word if word.lower() not in self.Stopwords]
 
-    def count_frequencies(self,word):
+    def count_frequencies(self, word):
         frequency_dict = {}
         for item in word:
             if item in frequency_dict:
                 frequency_dict[item] += 1
             else:
                 frequency_dict[item] = 1
+        return frequency_dict
+
+    def sort_frequencies(self, frequencies):
+        # Convert all words to lowercase before sorting
+        frequencies_lower = {word.lower(): freq for word, freq in frequencies.items()}
+        print("Lowercase frequencies:", frequencies_lower)  # Debug output
         
-        # Sort the dictionary items based on their values in descending order
-        sorted_items = sorted(frequency_dict.items(), key=lambda x: x[1], reverse=True)
-        
-        # Convert the sorted items back into a dictionary
-        sorted_dict = {}
-        for key, value in sorted_items:
-            sorted_dict[key] = value
-        
+        # Create a SortedList object
+        sorted_list = SortedList()
+        # Convert frequencies to Word objects and insert into the sorted list
+        for word, frequency in frequencies_lower.items():
+            sorted_list.insert(Word(word))
+
+        # print(sorted_list.convertList())
+        # Convert the SortedList back to a dictionary
+        sorted_dict = {node.name: frequencies[node] for node in sorted_list}
+        print("Sorted frequencies:", sorted_dict)  # Debug output
         return sorted_dict
 
+
+    
     def display_frequency_graph(self, frequencies):
         max_freq = max(frequencies.values())
         words = list(frequencies.keys())
@@ -50,11 +61,12 @@ class Frequencies(Morse):
 
         for row in graph_rows:
             print(row)
-        print("-" * 50)
+        print("-" * 60)
 
     def display_frequency_labels(self, frequencies):
         words = list(frequencies.keys())
-        morse_keys = Encoder().morse_recursive(" "," ".join(words)).split(" ")
+        morse_keys = Encoder().morse_String(" ".join(words)).split(" ")
+        morse_keys = [morse.strip(',') for morse in morse_keys]
         max_length = max(len(morse) for morse in morse_keys)
 
         for i in range(max_length):

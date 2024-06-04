@@ -1,6 +1,7 @@
 from Morse.morse_encoder import Encoder, Decoder
 from Frequency.Frequency import Frequencies
 from menu.Menu import Menu
+from Report.Report import Report
 Current_state = True
 
 Menu.ShowName()
@@ -17,10 +18,11 @@ def main():
                     decoder = Decoder()
                     decoder.morse_recursive()
                 case 3:
-                    F = Frequencies()
-                    F.read_frequencies()
+                    Frequency = Frequencies()
+                    Frequency.read_frequencies()
                 case 4:
-                    print("case 4")
+                    Reports = Report()
+                    Reports.process()
                 case 5:
                     print('case 5')
                 case 6:
