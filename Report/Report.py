@@ -18,14 +18,13 @@ class Report(Frequencies):
         morse_keys = Encoder().morse_String(" ".join(words)).split(" ")
         morse_keys = [morse.strip(',') for morse in morse_keys]
         morse_word_mapping = {words[i]: morse_keys[i] for i in range(len(words))}
-        # Report = self.generate_report(morse_word_mapping)
-        # while True:
-        #     self.select_Output_file()
-        #     if not Utility.CheckFileType(self.Output_File, 1):
-        #         continue
-        #     else: 
-        #         return Utility.WriteFile(self.Output_File, Report)
-                
+        Report = self.generate_report(morse_word_mapping)
+        while True:
+            self.select_Output_file()
+            if not Utility.CheckFileType(self.Output_File, 1):
+                continue
+            else: 
+                Utility.WriteFile(self.Output_File, Report)
 
 
     def generate_report(self,morse_word_mapping):
