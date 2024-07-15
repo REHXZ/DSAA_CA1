@@ -1,3 +1,7 @@
+## Name : Rejey Ezekiel
+## Class : DAAA/FT/2A/01
+## Adm No : 2348935
+
 """Importing Classes"""
 from Morse.morse_encoder import Encoder, Decoder
 from Frequency.Frequency import Frequencies
